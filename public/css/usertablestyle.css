@@ -52,15 +52,12 @@
         font-size: 17px;
         vertical-align: middle !important;
     }
-
+   .mytable{
+    padding-left: 2cm;
+    padding-right: 2cm;
+   }
     .item {
         height: 50px;
         overflow: hidden;
         color: #fff;
     }
-    .fullform{
-        padding-top: 50px;
-        padding-right: 90px;
-        padding-bottom: 150px;
-        padding-left: 90px;
-      }

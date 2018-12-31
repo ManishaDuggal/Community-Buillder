@@ -8,52 +8,45 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <link href="css/adduserstyle.css" rel="stylesheet">
     <title>Add User</title>
   </head>
   <body>
      <nav class="navbar navbar-light bg-light">
-                <a class="navbar-brand">Navbar</a>
+                <a style="color:rgb(59, 81, 182)" class="navbar-brand">Community Builder</a>
                 <form class="form-inline">
                   <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                  <button class="btn btn-outline my-2 my-sm-0" type="submit">Search</button>
+                  <a href="/logout">Logout</a>
                 </form>
      </nav>
-     <nav class="navbar navbar-light bg-light">
-            <span class="navbar-text">
-              Navbar text with an inline element
+     <nav class="navbar navbar-light nav-bg">
+            <span class="navbar-text" id="demo">
+              Welcome
             </span>
      </nav>
     <div class="left">
-        <div class="item">
-            <i class="fas fa-fw fa-bars"></i>
-        </div>
     </br>
-    </br>
+      <div class="item"> 
+        <i onclick="goHome()" class="fa fa-home" style="font-size:27px"></i> &nbsp &nbsp Home
+    </div>
         <div class="item active">
-            <i class="fas fa-fw fa-map-marked-alt"></i> Map
+            <i style="font-size:27px;color:rgb(255, 255, 255)" class="fa fa-user-plus fa-map-marked-alt" onclick="goUser()"></i> &nbsp &nbsp Add User
         </div>
-    </br>
-    </br>
         <div class="item">
-            <i class="fas fa-fw fa-columns"></i> Split
+            <i onclick="goUserList()" style="font-size:27px;color:rgb(255, 255, 255)" class="fa fa-users fa-columns"></i>  &nbsp &nbsp Users List
         </div>
-    </br>
-    </br>
         <div class="item">
-            <i class="fas fa-fw fa-th"></i> Grid
-        </div>
-    </br> 
-    </br>
-        <div class="item">
-            <i class="fas fa-fw fa-user-circle"></i> Dash
+            <i onclick="goPassword()" class="fa fa-lock" style="font-size:27px"></i> &nbsp &nbsp &nbsp Change Password
         </div>
     </div>
     <div class='fullform'>
-            <form method="post" action="/submit-form.js">
+            <form method="post" action="/submit-adduser.js">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Email address</label>
-                  <input required type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                  <input onkeyup="showHint(this.value)" required type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
                   <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
                 <div class="form-group">
@@ -78,8 +71,32 @@
               </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+<script>
+function showHint(str) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("demo").innerHTML =
+        this.responseText;
+      }
+    };
+    xhttp.open("GET", "/checkuser.js/"+str,true);
+    xhttp.send();
+  }
+  function goUser(){
+    window.location.href = '/adduser';
+  }
+  function goHome(){
+    window.location.href = '/adminhome';
+  }
+  function goUserList(){
+    window.location.href = '/userslist';
+  }
+  function goPassword(){
+    window.location.href = '/password';
+  }
+</script>
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
