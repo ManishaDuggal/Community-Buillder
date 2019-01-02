@@ -11,10 +11,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 var db=require('./users-database.js');
+const cdb=require('./communities-database');
 var validation=require('./checkuser.js');
-
+const fileupload=require('./upload');
  app.get('/login.js', function(req, res){
-    res.sendFile(__dirname+'/public/login.html');
+    res.render('login',{});
  });
  app.post('/checklogin.js', function(req, res){
     db.findUser({email:req.body.email,password:req.body.password},function(result){
@@ -23,21 +24,21 @@ var validation=require('./checkuser.js');
             req.session.email=req.body.email;
             res.redirect('/adminhome');
         }else{
-            res.sendFile(__dirname+'/public/login.html');
+            res.render('login',{});
         }
      })
  });
  app.get('/logout', function(req, res){
      req.session.destroy();
-    res.sendFile(__dirname+'/public/login.html');
+     res.render('login',{});
  });
 //admin functions
 //form to add a user
 app.get('/adduser', function(req, res){
     if(req.session.isLoggedIn){
-        res.sendFile(__dirname+'/public/adduser.html');
+        res.render('adduser',{str:"welcome"});
     }else{
-        res.sendFile(__dirname+'/public/login.html');
+        res.render('login',{});
     }
     
  });
@@ -51,7 +52,7 @@ app.get('/checkuser.js/:str', function(req, res){
             res.send("</br>");
         });
     }else{
-        res.sendFile(__dirname+'/public/login.html');
+        res.render('login',{});
     }
        
     
@@ -71,17 +72,19 @@ app.post('/submit-adduser.js',function(req,res){
                     db.addUser(req.body.email,req.body.password,req.body.phone,req.body.role,function(){
                     var mailer=require('./mail.js');
                     mailer.sendmail('manuduggal9@gmail.com',req.body.password);
-                    res.send("success");
+                    res.render('adduser',{str:"User successfully added and email is sent to user."});
+                    // res.send("success");
                     });
                     
                 }else
-                res.redirect('/adduser');
+                res.render('adduser',{str:"Enter a strong password"});
+                //res.redirect('/adduser');
                
             });
         });
         
     }else{
-        res.sendFile(__dirname+'/public/login.html');
+        res.render('login',{});
     }
     
 });
@@ -95,7 +98,7 @@ app.post('/submit-adduser.js',function(req,res){
             res.render('adminhome',{arr:result});
          })
     }else{
-        res.sendFile(__dirname+'/public/login.html');
+        res.render('login',{});
     }
     
   });
@@ -109,7 +112,8 @@ app.post('/submit-adduser.js',function(req,res){
         res.render('datatable',{arr:result});
        });
     }else{
-        res.sendFile(__dirname+'/public/login.html');
+        res.render('login',{});
+       // res.sendFile(__dirname+'/public/login.html');
     }  
     
   });
@@ -125,6 +129,19 @@ app.post('/submit-adduser.js',function(req,res){
        }
   });
 
-
-
-app.listen(3002);
+//create community form
+app.get('/createcommunity', function(req, res){
+    res.render('createcommunity');
+});
+//saving community in database using upload.js file
+app.post('/upload', (req, res) => {
+  fileupload.uploadimage(req,res);
+});
+//communities list
+app.get('/communitieslist',function(req,res){
+    cdb.getCommunities(function(result){
+        console.log(result);
+        res.render('communitylist',{arr:result});
+  });
+});
+app.listen(3000);

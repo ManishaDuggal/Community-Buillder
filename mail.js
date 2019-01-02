@@ -4,8 +4,8 @@ module.exports={
 var transport = {
   host: 'smtp.gmail.com',
   auth: {
-    user: '',
-    pass: ''
+    user: "",
+    pass: "",
   }
 }
 
@@ -21,10 +21,9 @@ transporter.verify((error, success) => {
 
 
 var mail = {
-    from: "",
-    to: receiver, 
+    from: ""
     subject: 'Community Builder',
-    text: "Your password is "+password
+    text: "Your password is "+password,
   }
 
   transporter.sendMail(mail, (err, data) => {

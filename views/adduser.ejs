@@ -24,7 +24,7 @@
      </nav>
      <nav class="navbar navbar-light nav-bg">
             <span class="navbar-text" id="demo">
-              Welcome
+             <%=str%>
             </span>
      </nav>
     <div class="left">
@@ -38,6 +38,12 @@
         <div class="item">
             <i onclick="goUserList()" style="font-size:27px;color:rgb(255, 255, 255)" class="fa fa-users fa-columns"></i>  &nbsp &nbsp Users List
         </div>
+        <div class="item">
+          <i onclick="goCreateCommunity()" class="fa fa-object-group" style="font-size:27px"></i> &nbsp &nbsp &nbsp Create Community
+      </div>
+      <div class="item">
+        <i onclick="goCommunitiesList()" class="fa fa-list" style="font-size:27px"></i> &nbsp &nbsp &nbsp Communities List
+    </div>
         <div class="item">
             <i onclick="goPassword()" class="fa fa-lock" style="font-size:27px"></i> &nbsp &nbsp &nbsp Change Password
         </div>
@@ -94,6 +100,12 @@ function showHint(str) {
   }
   function goPassword(){
     window.location.href = '/password';
+  }
+  function goCreateCommunity(){
+    window.location.href = '/createcommunity';
+  }
+  function goCommunitiesList(){
+    window.location.href = '/communitieslist';
   }
 </script>
 
